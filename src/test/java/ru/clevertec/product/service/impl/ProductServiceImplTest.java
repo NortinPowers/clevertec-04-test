@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,7 +15,6 @@ import static ru.clevertec.product.util.TestConstant.NEW_PRODUCT_PRICE;
 import static ru.clevertec.product.util.TestConstant.PRODUCT_INCORRECT_UUID;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
@@ -30,6 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.product.data.InfoProductDto;
 import ru.clevertec.product.data.ProductDto;
 import ru.clevertec.product.entity.Product;
+import ru.clevertec.product.exception.ProductNotFoundException;
 import ru.clevertec.product.mapper.ProductMapper;
 import ru.clevertec.product.repository.ProductRepository;
 import ru.clevertec.product.util.InfoProductTestBuilder;
@@ -75,7 +74,7 @@ class ProductServiceImplTest {
         }
 
         @Test
-        void getShouldReturnNoSuchElementException_whenIncorrectUuid() {
+        void getShouldReturnProductNotFoundException_whenIncorrectUuid() {
             Product product = ProductTestBuilder.builder()
                     .withUuid(null)
                     .build()
@@ -85,7 +84,7 @@ class ProductServiceImplTest {
             when(productRepository.findById(product.getUuid()))
                     .thenReturn(empty);
 
-            assertThrows(NoSuchElementException.class, () -> productService.get(product.getUuid()));
+            assertThrows(ProductNotFoundException.class, () -> productService.get(product.getUuid()));
             verify(productRepository).findById(product.getUuid());
         }
     }
@@ -254,17 +253,17 @@ class ProductServiceImplTest {
         }
 
         @Test
-        void updateShouldReturnIllegalArgumentException_whenIncorrectUuid() {
+        void updateShouldReturnProductNotFoundException_whenIncorrectUuid() {
             Product product = ProductTestBuilder.builder()
                     .withUuid(PRODUCT_INCORRECT_UUID)
                     .build()
                     .buildProduct();
-            NoSuchElementException exception = new NoSuchElementException();
+            ProductNotFoundException exception = new ProductNotFoundException(product.getUuid());
 
             when(productRepository.findById(product.getUuid()))
                     .thenThrow(exception);
 
-            assertThrows(NoSuchElementException.class, () -> productService.update(product.getUuid(), any(ProductDto.class)));
+            assertThrows(ProductNotFoundException.class, () -> productService.update(product.getUuid(), any(ProductDto.class)));
             verify(productRepository).findById(product.getUuid());
             verify(mapper, never()).toInfoProductDto(product);
             verify(productRepository, never()).save(any(Product.class));
@@ -283,19 +282,6 @@ class ProductServiceImplTest {
                     .delete(uuid);
 
             productService.delete(uuid);
-            verify(productRepository).delete(uuid);
-        }
-
-        @Test
-        void deleteShouldNoSuchElementException_whenIncorrectUuid() {
-            UUID uuid = PRODUCT_INCORRECT_UUID;
-            NoSuchElementException exception = new NoSuchElementException();
-
-            doThrow(exception)
-                    .when(productRepository)
-                    .delete(uuid);
-
-            assertThrows(NoSuchElementException.class, () -> productService.delete(uuid));
             verify(productRepository).delete(uuid);
         }
     }
