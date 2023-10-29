@@ -5,7 +5,8 @@ import java.util.UUID;
 public class ProductNotFoundException extends RuntimeException {
 
     /**
-     * Сообщение должно быть именно такого формата
+     * Сообщение должно быть именно такого формата.
+     *
      * @param uuid - идентификатор продукта
      */
     public ProductNotFoundException(UUID uuid) {

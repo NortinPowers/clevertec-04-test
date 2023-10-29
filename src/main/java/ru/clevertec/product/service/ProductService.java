@@ -1,16 +1,15 @@
 package ru.clevertec.product.service;
 
+import java.util.List;
+import java.util.UUID;
 import ru.clevertec.product.data.InfoProductDto;
 import ru.clevertec.product.data.ProductDto;
 import ru.clevertec.product.exception.ProductNotFoundException;
 
-import java.util.List;
-import java.util.UUID;
-
 public interface ProductService {
 
     /**
-     * Ищет продукт по идентификатору
+     * Ищет продукт по идентификатору.
      *
      * @param uuid идентификатор продукта
      * @return найденный продукт
@@ -19,14 +18,14 @@ public interface ProductService {
     InfoProductDto get(UUID uuid);
 
     /**
-     * Возвращает все существующий продукты
+     * Возвращает все существующий продукты.
      *
      * @return лист с информацией о продуктах
      */
     List<InfoProductDto> getAll();
 
     /**
-     * Создаёт новый продукт из DTO
+     * Создаёт новый продукт из DTO.
      *
      * @param productDto DTO с информацией о создании
      * @return идентификатор созданного продукта
@@ -34,7 +33,7 @@ public interface ProductService {
     UUID create(ProductDto productDto);
 
     /**
-     * Обновляет уже существующий продукт из информации полученной в DTO
+     * Обновляет уже существующий продукт из информации полученной в DTO.
      *
      * @param uuid       идентификатор продукта для обновления
      * @param productDto DTO с информацией об обновлении
@@ -42,7 +41,7 @@ public interface ProductService {
     void update(UUID uuid, ProductDto productDto);
 
     /**
-     * Удаляет существующий продукт
+     * Удаляет существующий продукт.
      *
      * @param uuid идентификатор продукта для удаления
      */
