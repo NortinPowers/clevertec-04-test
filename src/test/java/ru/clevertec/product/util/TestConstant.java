@@ -16,5 +16,6 @@ public class TestConstant {
     public static final String NEW_PRODUCT_DESCRIPTION = "gadget that allows the user(s) to travel between different universes/dimensions/realities";
     public static final BigDecimal PRODUCT_PRICE = BigDecimal.TEN;
     public static final BigDecimal NEW_PRODUCT_PRICE = BigDecimal.valueOf(11);
+    public static final String PRODUCT_DESCRIPTION = "all-purpose home device";
     public static final LocalDateTime PRODUCT_CREATED_DATE = LocalDateTime.of(2023, 10, 28, 11, 17, 0);
 }
