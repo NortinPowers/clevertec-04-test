@@ -1,7 +1,6 @@
 package ru.clevertec.product.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
@@ -40,8 +39,5 @@ public interface ProductMapper {
      * @param productDto информация для обновления
      * @return обновлённый продукт
      */
-    @Mapping(source = "productDto.name", target = "name")
-    @Mapping(source = "productDto.description", target = "description")
-    @Mapping(source = "productDto.price", target = "price")
     Product merge(@MappingTarget Product product, ProductDto productDto);
 }
