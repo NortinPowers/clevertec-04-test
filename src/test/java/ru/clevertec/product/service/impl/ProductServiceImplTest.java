@@ -154,7 +154,7 @@ class ProductServiceImplTest {
                     .thenReturn(createdProduct);
 
             UUID actual = productService.create(productDto);
-            assertEquals(actual, createdProduct.getUuid());
+            assertEquals(createdProduct.getUuid(), actual);
             verify(mapper, atLeastOnce()).toProduct(productDto);
             verify(productRepository, atLeastOnce()).save(product);
         }
