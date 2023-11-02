@@ -15,18 +15,13 @@ import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.product.entity.Product;
 import ru.clevertec.product.exception.ValidationException;
 import ru.clevertec.product.util.ProductTestBuilder;
 
-@ExtendWith(MockitoExtension.class)
 class InMemoryProductRepositoryTest {
 
-    @InjectMocks
-    private InMemoryProductRepository inMemoryProductRepository;
+    private final InMemoryProductRepository inMemoryProductRepository = new InMemoryProductRepository();
 
     @Test
     void findByIdShouldReturnNotEmptyOptional_whenCorrectUuid() {
