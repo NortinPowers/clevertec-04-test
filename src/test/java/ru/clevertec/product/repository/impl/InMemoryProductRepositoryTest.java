@@ -47,6 +47,7 @@ class InMemoryProductRepositoryTest {
                 .buildProduct();
 
         Product actual = inMemoryProductRepository.save(expected);
+
         assertThat(actual)
                 .hasNoNullFieldsOrPropertiesExcept(Product.Fields.uuid)
                 .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())

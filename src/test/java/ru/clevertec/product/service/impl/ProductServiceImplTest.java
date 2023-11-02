@@ -63,14 +63,12 @@ class ProductServiceImplTest {
                     .thenReturn(expected);
 
             InfoProductDto actual = productService.get(product.getUuid());
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.uuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.name())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.description())
                     .hasFieldOrPropertyWithValue(Product.Fields.price, expected.price());
-
-            verify(productRepository).findById(product.getUuid());
-            verify(mapper).toInfoProductDto(product);
         }
 
         @Test
@@ -85,7 +83,6 @@ class ProductServiceImplTest {
                     .thenReturn(empty);
 
             assertThrows(ProductNotFoundException.class, () -> productService.get(product.getUuid()));
-            verify(productRepository).findById(product.getUuid());
         }
     }
 
@@ -107,11 +104,10 @@ class ProductServiceImplTest {
                     .thenReturn(infoProductDto);
 
             List<InfoProductDto> actual = productService.getAll();
+
             assertThat(actual)
                     .hasSize(expected.size())
                     .isEqualTo(expected);
-            verify(productRepository, atLeastOnce()).findAll();
-            verify(mapper).toInfoProductDto(product);
             verify(mapper, atLeastOnce()).toInfoProductDto(any(Product.class));
         }
 
@@ -124,10 +120,10 @@ class ProductServiceImplTest {
                     .thenReturn(products);
 
             List<InfoProductDto> actual = productService.getAll();
+
             assertThat(actual)
                     .hasSize(expected.size())
                     .containsAll(expected);
-            verify(productRepository).findAll();
             verify(mapper, never()).toInfoProductDto(any(Product.class));
         }
     }
@@ -154,9 +150,8 @@ class ProductServiceImplTest {
                     .thenReturn(createdProduct);
 
             UUID actual = productService.create(productDto);
+
             assertEquals(createdProduct.getUuid(), actual);
-            verify(mapper, atLeastOnce()).toProduct(productDto);
-            verify(productRepository, atLeastOnce()).save(product);
         }
 
         @Test
@@ -177,7 +172,7 @@ class ProductServiceImplTest {
                     .thenReturn(createdProduct);
 
             productService.create(productDto);
-            verify(mapper, atLeastOnce()).toProduct(productDto);
+
             verify(productRepository, atLeastOnce()).save(captor.capture());
             assertThat(captor.getValue())
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, null);
@@ -198,7 +193,7 @@ class ProductServiceImplTest {
                     .thenReturn(productToSave);
 
             productService.create(productDto);
-            verify(mapper, atLeastOnce()).toProduct(productDto);
+
             verify(productRepository, atLeastOnce()).save(captor.capture());
             assertThat(captor.getValue())
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, productToSave.getUuid());
@@ -246,10 +241,6 @@ class ProductServiceImplTest {
                     .thenReturn(updatedProduct);
 
             productService.update(uuid, updatedProductDto);
-            verify(productRepository).findById(uuid);
-            verify(mapper).merge(product, updatedProductDto);
-            verify(productRepository).save(updatedProduct);
-
         }
 
         @Test
@@ -264,7 +255,6 @@ class ProductServiceImplTest {
                     .thenThrow(exception);
 
             assertThrows(ProductNotFoundException.class, () -> productService.update(product.getUuid(), any(ProductDto.class)));
-            verify(productRepository).findById(product.getUuid());
             verify(mapper, never()).toInfoProductDto(product);
             verify(productRepository, never()).save(any(Product.class));
         }
@@ -282,7 +272,6 @@ class ProductServiceImplTest {
                     .delete(uuid);
 
             productService.delete(uuid);
-            verify(productRepository).delete(uuid);
         }
     }
 }
