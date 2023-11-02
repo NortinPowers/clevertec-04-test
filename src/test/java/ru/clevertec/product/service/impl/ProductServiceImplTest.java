@@ -268,8 +268,7 @@ class ProductServiceImplTest {
             UUID uuid = ProductTestBuilder.builder().build().getUuid();
 
             doNothing()
-                    .when(productRepository)
-                    .delete(uuid);
+                    .when(productRepository).delete(uuid);
 
             productService.delete(uuid);
         }
