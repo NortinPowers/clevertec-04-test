@@ -7,10 +7,12 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import ru.clevertec.product.entity.Product;
 import ru.clevertec.product.repository.ProductRepository;
+import ru.clevertec.product.validator.ProductValidator;
 
 public class InMemoryProductRepository implements ProductRepository {
 
     private final List<Product> products = new CopyOnWriteArrayList<>();
+    private final ProductValidator productValidator = new ProductValidator();
 
     @Override
     public Optional<Product> findById(UUID uuid) {
@@ -26,8 +28,13 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        product.setUuid(UUID.randomUUID());
-        product.setCreated(LocalDateTime.now());
+        if (product.getUuid() == null) {
+            product.setUuid(UUID.randomUUID()); //заглушка, пока не подключена БД
+        }
+        if (product.getCreated() == null) {
+            product.setCreated(LocalDateTime.now());
+        }
+        productValidator.validate(product);
         products.add(product);
         return product;
     }
