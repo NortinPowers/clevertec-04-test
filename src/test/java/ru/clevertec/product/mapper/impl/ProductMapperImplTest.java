@@ -36,6 +36,7 @@ class ProductMapperImplTest {
                     .buildProduct();
 
             Product actual = productMapper.toProduct(productDto);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
@@ -55,6 +56,7 @@ class ProductMapperImplTest {
                     .buildProduct();
 
             Product actual = productMapper.toProduct(productDto);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
@@ -68,6 +70,7 @@ class ProductMapperImplTest {
             ProductDto productDto = null;
 
             Product actual = productMapper.toProduct(productDto);
+
             assertThat(actual)
                     .isNull();
         }
@@ -84,6 +87,7 @@ class ProductMapperImplTest {
                     .buildInfoProductDto();
 
             InfoProductDto actual = productMapper.toInfoProductDto(product);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.uuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.name())
@@ -101,6 +105,7 @@ class ProductMapperImplTest {
                     .buildInfoProductDto();
 
             InfoProductDto actual = productMapper.toInfoProductDto(product);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.uuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.name())
@@ -113,6 +118,7 @@ class ProductMapperImplTest {
             Product product = null;
 
             InfoProductDto actual = productMapper.toInfoProductDto(product);
+
             assertThat(actual)
                     .isNull();
         }
@@ -137,6 +143,7 @@ class ProductMapperImplTest {
                     .buildProduct();
 
             Product actual = productMapper.merge(product, productDto);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
@@ -161,6 +168,7 @@ class ProductMapperImplTest {
                     .buildProduct();
 
             Product actual = productMapper.merge(product, productDto);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
@@ -179,6 +187,7 @@ class ProductMapperImplTest {
                     .buildProduct();
 
             Product actual = productMapper.merge(product, productDto);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
@@ -208,6 +217,7 @@ class ProductMapperImplTest {
                     .buildProduct();
 
             Product actual = productMapper.merge(product, productDto);
+
             assertThat(actual)
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
